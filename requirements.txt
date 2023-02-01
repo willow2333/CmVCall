@@ -1,0 +1,6 @@
+minimap2
+bcftools
+seqkit
+pysam
+pandas
+consent
