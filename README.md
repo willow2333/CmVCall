@@ -3,7 +3,7 @@
 &emsp; &emsp; CmVCall is a variant caller of Mitochondrial control region amplicons. 
 
 
-### MHtyper workflow
+### CmVCall workflow
 ![1](pic/flow.png)
 
 #### Step1：
