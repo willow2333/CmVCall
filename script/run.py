@@ -16,10 +16,10 @@ from mtDNAcaller import Filter
 import time
 from tqdm import tqdm
 
-samtools='/data/qinliu/software/Anaconda3/envs/Nano/bin/samtools'
-minimap2 = '/data/qinliu/software/Anaconda3/envs/Nano/bin/minimap2'
-seqkit = '/data/qinliu/software/Anaconda3/envs/Nano/bin/seqkit'
-Consent_correct = '/data/qinliu/software/Anaconda3/envs/Nano/bin/CONSENT-correct'
+samtools='samtools'
+minimap2 = 'minimap2'
+seqkit = 'seqkit'
+Consent_correct = 'CONSENT-correct'
 
 
 
@@ -44,9 +44,9 @@ class Run():
             os.system('gunzip -c ../{0}.fq.gz |NanoFilt  -q 10 -l 1100 --maxlength 1500 > {1}_filter1.fastq'.format(k,k))
             os.system('mkdir PAF')
             print('{}:Remove NUMT Satrt!'.format(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))))
-            os.system('minimap2 -cx map-ont -t 20 --secondary=no /data/qinliu//software/RtN/Calabrese_Dayama_Smart_Numts_filt_3.fa {0}_filter1.fastq >PAF/{1}_numt.paf'.format(k,k))
+            os.system('minimap2 -cx map-ont -t 20 --secondary=no script/ref/Calabrese_Dayama_Smart_Numts_filt_3.fa {0}_filter1.fastq >PAF/{1}_numt.paf'.format(k,k))
             os.system("awk  -F'\t' '{{if ($12 > 30) print $1}}' PAF/{0}_numt.paf |sort|uniq >PAF/numt.id".format(k))
-            os.system('minimap2 -cx map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta {0}_filter1.fastq >PAF/{1}_dloop.paf'.format(k,k))
+            os.system('minimap2 -cx map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta {0}_filter1.fastq >PAF/{1}_dloop.paf'.format(k,k))
             os.system("awk -F'\t' '{{if ($8 < 50 && $9 > 1173) print $1}}' PAF/{0}_dloop.paf |sort|uniq >PAF/dloop.id".format(k))
             os.system('comm -23 PAF/dloop.id PAF/numt.id >PAF/final.id')
             print('{}:Remove NUMT End!'.format(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))))
@@ -59,7 +59,7 @@ class Run():
                     os.system('CONSENT-correct --in {0}_filter.fastq --out {1}.fasta --type ONT -j 40'.format(k,k))
                     print('{}:Correction End!'.format(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))))
                     os.system('less {0}.fasta|gzip > {1}_filter.fq.gz'.format(k,k))
-                    os.system('minimap2 -ax map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta {0}_filter.fq.gz >{1}.sam'.format(k,k))
+                    os.system('minimap2 -ax map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta {0}_filter.fq.gz >{1}.sam'.format(k,k))
                     os.system('samtools view -Sb {0}.sam >{1}.bam'.format(k,k))
                     os.system('samtools sort -@6 -O bam -o {0}.sort.bam {1}.bam'.format(k,k))
                     os.system('samtools index {0}.sort.bam'.format(k))
@@ -69,11 +69,11 @@ class Run():
                     os.system('mkdir rev')
                     os.system('seqkit grep -f for.id {0}_filter.fq.gz |gzip >for/for.fq.gz'.format(k))
                     os.system('seqkit grep -f rev.id {0}_filter.fq.gz |gzip >rev/rev.fq.gz'.format(k))
-                    os.system('minimap2 -ax map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta for/for.fq.gz >for/for.sam')
+                    os.system('minimap2 -ax map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta for/for.fq.gz >for/for.sam')
                     os.system('samtools view -Sb for/for.sam >for/for.bam')
                     os.system('samtools sort -@6 -O bam -o for/for.sort.bam for/for.bam')
                     os.system('samtools index for/for.sort.bam')
-                    os.system('minimap2 -ax map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta rev/rev.fq.gz >rev/rev.sam')
+                    os.system('minimap2 -ax map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta rev/rev.fq.gz >rev/rev.sam')
                     os.system('samtools view -Sb rev/rev.sam >rev/rev.bam')
                     os.system('samtools sort -@6 -O bam -o rev/rev.sort.bam rev/rev.bam')
                     os.system('samtools index rev/rev.sort.bam')
@@ -83,7 +83,7 @@ class Run():
                     forpartlist = [i for i in os.listdir('./') if i.endswith('.fq.gz')]
                     for forpart in tqdm(forpartlist):
                         n1 = forpart[0:-6]
-                        os.system('minimap2 -ax map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta {0} >{1}.sam'.format(forpart,n1))
+                        os.system('minimap2 -ax map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta {0} >{1}.sam'.format(forpart,n1))
                         os.system('samtools view -Sb {0}.sam >{1}.bam'.format(n1,n1))
                         os.system('samtools sort -@6 -O bam -o {0}.sort.bam {1}.bam'.format(n1,n1))
                         os.system('samtools index {0}.sort.bam'.format(n1))
@@ -106,7 +106,7 @@ class Run():
                     for revpart in tqdm(revpartlist):
                         n2 = revpart[0:-6]
                         os.system(
-                            'minimap2 -ax map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta {0} >{1}.sam'.format(
+                            'minimap2 -ax map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta {0} >{1}.sam'.format(
                                 revpart, n2))
                         os.system('samtools view -Sb {0}.sam >{1}.bam'.format(n2, n2))
                         os.system('samtools sort -@6 -O bam -o {0}.sort.bam {1}.bam'.format(n2, n2))
@@ -137,7 +137,7 @@ class Run():
                     os.system('seqkit grep -f PAF/final.id {0}_filter1.fastq |gzip >{1}_filter.fq.gz'.format(k,k))
                     os.system('rm -r PAF')
                     os.system(
-                        'minimap2 -ax map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta {0}_filter.fq.gz >{1}.sam'.format(
+                        'minimap2 -ax map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta {0}_filter.fq.gz >{1}.sam'.format(
                             k, k))
                     os.system('samtools view -Sb {0}.sam >{1}.bam'.format(k, k))
                     os.system('samtools sort -@6 -O bam -o {0}.sort.bam {1}.bam'.format(k, k))
@@ -153,12 +153,12 @@ class Run():
                     rows = min([len(open("for.id", 'rU').readlines()), len(open("rev.id", 'rU').readlines())])
                     os.system('seqkit grep -f for.id {0}_filter.fq.gz|seqkit sample --number {1} |gzip >for/for.fq.gz;seqkit grep -f rev.id {0}_filter.fq.gz|seqkit sample --number {1} |gzip >rev/rev.fq.gz'.format(k,rows))
                     os.system(
-                        'minimap2 -ax map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta for/for.fq.gz >for/for.sam')
+                        'minimap2 -ax map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta for/for.fq.gz >for/for.sam')
                     os.system('samtools view -Sb for/for.sam >for/for.bam')
                     os.system('samtools sort -@6 -O bam -o for/for.sort.bam for/for.bam')
                     os.system('samtools index for/for.sort.bam')
                     os.system(
-                        'minimap2 -ax map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta rev/rev.fq.gz >rev/rev.sam')
+                        'minimap2 -ax map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta rev/rev.fq.gz >rev/rev.sam')
                     os.system('samtools view -Sb rev/rev.sam >rev/rev.bam')
                     os.system('samtools sort -@6 -O bam -o rev/rev.sort.bam rev/rev.bam')
                     os.system('samtools index rev/rev.sort.bam')
@@ -169,7 +169,7 @@ class Run():
                     for forpart in tqdm(forpartlist):
                         n1 = forpart[0:-6]
                         os.system(
-                            'minimap2 -ax map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta {0} >{1}.sam'.format(
+                            'minimap2 -ax map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta {0} >{1}.sam'.format(
                                 forpart, n1))
                         os.system('samtools view -Sb {0}.sam >{1}.bam'.format(n1, n1))
                         os.system('samtools sort -@6 -O bam -o {0}.sort.bam {1}.bam'.format(n1, n1))
@@ -198,7 +198,7 @@ class Run():
                     for revpart in tqdm(revpartlist):
                         n2 = revpart[0:-6]
                         os.system(
-                            'minimap2 -ax map-ont -t 20 --secondary=no /data/qinliu/Work/SCU_Forensic_mtDNA/reference/rCRS_NC_012920_flank_dloop.fasta {0} >{1}.sam'.format(
+                            'minimap2 -ax map-ont -t 20 --secondary=no script/ref/rCRS_NC_012920_flank_dloop.fasta {0} >{1}.sam'.format(
                                 revpart, n2))
                         os.system('samtools view -Sb {0}.sam >{1}.bam'.format(n2, n2))
                         os.system('samtools sort -@6 -O bam -o {0}.sort.bam {1}.bam'.format(n2, n2))
@@ -245,10 +245,6 @@ class Run():
 
 
 if __name__ == '__main__':
-    # classrun = Run()
-    # classrun.run('/data/qinliu/Work/SCU_Forensic_mtDNA/CmVCallTest/correct', 'yes', 0.85,0.005,32,20)
-
-
     classrun = Run()
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", help='The path of files like *fq.gz.')
