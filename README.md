@@ -54,7 +54,7 @@
 #### 1.Test
 ```
    cd ./Test
-   python scripts/run.py --fastqfiles --input ./ --CORRECT yes --a1 0.85 --FC 32 
+   python scripts/run.py --fastqfiles --input ./ --CORRECT yes  --FC 32 
 ```
 
 #### 2. Output
