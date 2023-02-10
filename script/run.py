@@ -253,7 +253,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", help='The path of files like *fq.gz.')
     parser.add_argument("--CORRECT",default='yes', help='IF you want to correct the raw reads please choose "yes" else "no", default yes! ')
-    parser.add_argument("--a1", help='The frequency of the first allele')
+    parser.add_argument("--a1", default=0.85,help='The frequency of the first allele')
     parser.add_argument("--a2", default=0.005,help='The frequency of the second allele')
     parser.add_argument("--FC", help='The ratio of a1/a2')
     parser.add_argument("--depth", default=20,help='The depth of the least reads.')
