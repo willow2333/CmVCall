@@ -33,7 +33,7 @@
 ```
    git clone https://github.com/willow2333/CmVCall.git
    cd CmVCall  
-   python scripts/run.py --h
+   python script/run.py --h
    
   usage: run.py [-h] [--input INPUT] [--CORRECT CORRECT] [--a1 A1] [--a2 A2]
               [--FC FC] [--depth DEPTH]
@@ -54,7 +54,7 @@
 #### 1.Test
 ```
    cd ./Test
-   python ../script/run.py  --input ./ --CORRECT yes  --FC 32 
+   python ../script/run.py  --input ./ --cinput ${path of CmVCall} --CORRECT yes  --FC 32 
 ```
 
 #### 2. Output
