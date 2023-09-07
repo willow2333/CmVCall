@@ -61,5 +61,5 @@
 &emsp;The analysis results of variants is in filter_variants.txt
 
 
-© 2023 by  Yiping Hou (forensic@scu.edu.cn), Zheng Wang (wangzhengtim@scu.edu.cn), Liu Qin (liu.qin@qitantech.com)
+© 2023 by  Yiping Hou (forensic@scu.edu.cn), Zheng Wang (wangzhengtim@scu.edu.cn), Liu Qin (ql_willow@163.com)
 
