@@ -25,14 +25,14 @@
    conda activate CmVCall
    conda config --add channels bioconda 
    conda config --add channels
-   conda install --yes --file requirements.txt
 ```
 
 
 ### CmVCall installation
 ```
    git clone https://github.com/willow2333/CmVCall.git
-   cd CmVCall  
+   cd CmVCall
+   conda install --yes --file requirements.txt
    python script/cmvcall.py --h
    
   usage: cmvcall.py [-h] [--input INPUT] [--CORRECT CORRECT] [--a1 A1] [--a2 A2]
