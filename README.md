@@ -33,7 +33,6 @@
    git clone https://github.com/willow2333/CmVCall.git
    cd CmVCall
    conda install --yes --file requirements.txt
-   cd script
    python cmvcall.py --h
    
   usage: cmvcall.py [-h] [--input INPUT] [--cinput CINPUT] [--CORRECT CORRECT] [--a1 A1] [--a2 A2] [--FC FC] [--depth DEPTH]
@@ -53,8 +52,7 @@
 ###  Illustration
 #### 1.Test
 ```
-   cd ./Test
-   python ../script/cmvcall.py  --input ./ --cinput ${path of CmVCall} --CORRECT yes  --FC 32 
+   python cmvcall.py --input test/ --cinput ${path}/CmVCall-master --CORRECT yes  --FC 32
 ```
 
 #### 2. Output
