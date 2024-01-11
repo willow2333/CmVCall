@@ -36,18 +36,17 @@
    cd script
    python cmvcall.py --h
    
-  usage: cmvcall.py [-h] [--input INPUT] [--CORRECT CORRECT] [--a1 A1] [--a2 A2]
-              [--FC FC] [--depth DEPTH]
+  usage: cmvcall.py [-h] [--input INPUT] [--cinput CINPUT] [--CORRECT CORRECT] [--a1 A1] [--a2 A2] [--FC FC] [--depth DEPTH]
 
-    optional arguments:
-      -h, --help         show this help message and exit
-      --input INPUT      The path of files like *fq.gz.
-      --CORRECT CORRECT  IF you want to correct the raw reads please choose "yes"
-                         else "no", default yes!
-      --a1 A1            The frequency of the first allele
-      --a2 A2            The frequency of the second allele
-      --FC FC            The ratio of a1/a2
-      --depth DEPTH      The depth of the least reads.
+   optional arguments:
+     -h, --help         show this help message and exit
+     --input INPUT      The path of files like *fq.gz.
+     --cinput CINPUT    The path of CmVCall download
+     --CORRECT CORRECT  IF you want to correct the raw reads please choose "yes" else "no", default yes!
+     --a1 A1            The frequency of the first allele
+     --a2 A2            The frequency of the second allele
+     --FC FC            The ratio of a1/a2
+     --depth DEPTH      The depth of the least reads.
 
 ```
 
