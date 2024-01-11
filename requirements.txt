@@ -6,3 +6,5 @@ pandas
 consent
 tqdm
 scipy
+nanofilt
+samtools
