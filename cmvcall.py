@@ -1,4 +1,4 @@
-from run import Run
+from script.run import Run
 from pathlib import Path
 
 def main():
