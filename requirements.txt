@@ -4,3 +4,5 @@ seqkit
 pysam
 pandas
 consent
+tqdm
+scipy
