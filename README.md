@@ -52,7 +52,7 @@
 ###  Illustration
 #### 1.Test
 ```
-   python cmvcall.py --input test/ --cinput ${path}/CmVCall-master --CORRECT yes  --FC 32
+   python cmvcall.py --input test/ --cinput ${path}/CmVCall --CORRECT yes  --FC 32
 ```
 
 #### 2. Output
