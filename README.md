@@ -35,7 +35,7 @@
    cd CmVCall  
    python script/cmvcall.py --h
    
-  usage: run.py [-h] [--input INPUT] [--CORRECT CORRECT] [--a1 A1] [--a2 A2]
+  usage: cmvcall.py [-h] [--input INPUT] [--CORRECT CORRECT] [--a1 A1] [--a2 A2]
               [--FC FC] [--depth DEPTH]
 
     optional arguments:
